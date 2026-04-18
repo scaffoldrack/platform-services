@@ -1,0 +1,135 @@
+# scaffoldrack/platform-services — .gitignore
+#
+# Kubernetes manifests for Gitea, Vault, cert-manager, Traefik, Authentik, ArgoCD.
+
+# ─────────────────────────────────────────────────────────
+# Helm
+# ─────────────────────────────────────────────────────────
+
+# Downloaded chart dependencies (regeneratable via helm dep update)
+charts/
+**/charts/*.tgz
+
+# Helm packaged output
+*.tgz
+
+# Rendered Helm output (ephemeral)
+rendered/
+*.rendered.yaml
+
+# Real values with secrets (keep .example committed)
+values-real.yaml
+values.prod.yaml
+values-prod.yaml
+values.local.yaml
+values-local.yaml
+secrets-values.yaml
+*values.secret.yaml
+
+# ─────────────────────────────────────────────────────────
+# Kustomize
+# ─────────────────────────────────────────────────────────
+
+# Built output
+kustomize-build/
+*.built.yaml
+
+# ─────────────────────────────────────────────────────────
+# Kubernetes secrets — NEVER commit plaintext
+# ─────────────────────────────────────────────────────────
+
+# Generic patterns
+secrets.yaml
+*-secrets.yaml
+*.secret.yaml
+
+# SealedSecrets/SOPS encrypted are committable; raw sealed files may be
+# distinguishable by filename convention
+*.unsealed.yaml
+
+# Kubeconfig — never commit
+kubeconfig
+*.kubeconfig
+.kube/
+
+# ─────────────────────────────────────────────────────────
+# ArgoCD specific
+# ─────────────────────────────────────────────────────────
+
+# ArgoCD-related generated files
+argocd-server.log
+
+# ─────────────────────────────────────────────────────────
+# Workspace
+# ─────────────────────────────────────────────────────────
+tmp/*
+!tmp/.gitkeep
+
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# ─────────────────────────────────────────────────────────
+# Secrets
+# ─────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+credentials
+credentials.json
+
+# Vault unsealing
+vault-init.json
+unseal-keys.txt
+recovery-keys.txt
+
+# ─────────────────────────────────────────────────────────
+# OS junk
+# ─────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.directory
+.Trash-*
+
+# ─────────────────────────────────────────────────────────
+# Editors and IDEs
+# ─────────────────────────────────────────────────────────
+.vscode/
+*.code-workspace
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+Session.vim
+
+# ─────────────────────────────────────────────────────────
+# Backups and temp files
+# ─────────────────────────────────────────────────────────
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+
+# Logs
+logs/
+*.log
